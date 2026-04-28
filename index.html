@@ -4,23 +4,23 @@
   <meta charset="UTF-8"/>
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <style>
-    body { margin: 0; padding: 20px; font-family: Segoe UI; background: #f3f2f1; }
-    .btn { background: #0078D4; color: white; padding: 12px 24px; border: none; 
-           border-radius: 4px; font-size: 14px; cursor: pointer; width: 100%; }
-    .btn:hover { background: #106EBE; }
-    p { color: #605e5c; font-size: 13px; }
+    body, html { margin: 0; padding: 0; height: 100%; }
+    iframe { width: 100%; height: 100%; border: none; }
+    #loading { padding: 20px; text-align: center; font-family: Segoe UI; }
   </style>
 </head>
 <body>
-  <p>Kliknij przycisk żeby otworzyć panel zapisu maila do Extranetu.</p>
-  <button class="btn" id="btnOpen">Otwórz Extranet Mail Saver</button>
+  <div id="loading">Ładowanie...</div>
+  <iframe id="appFrame" style="display:none" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
   <script>
     Office.onReady(function() {
-      document.getElementById("btnOpen").onclick = function() {
-        var itemId = Office.context.mailbox.item.itemId;
-        var appUrl = "https://apps.powerapps.com/play/e/default-808439f3-5504-48fd-afe3-c264443f6f12/a/7212ddc7-3e16-4210-8195-75429ff3775a?tenantId=808439f3-5504-48fd-afe3-c264443f6f12&itemId=" + encodeURIComponent(itemId);
-        window.open(appUrl, "_blank");
-      };
+      var itemId = Office.context.mailbox.item.itemId;
+      var appUrl = "https://apps.powerapps.com/play/e/default-808439f3-5504-48fd-afe3-c264443f6f12/a/7212ddc7-3e16-4210-8195-75429ff3775a?tenantId=808439f3-5504-48fd-afe3-c264443f6f12&itemId=" + encodeURIComponent(itemId);
+      document.getElementById("loading").style.display = "none";
+      var frame = document.getElementById("appFrame");
+      frame.src = appUrl;
+      frame.style.display = "block";
+      frame.style.height = "100vh";
     });
   </script>
 </body>
